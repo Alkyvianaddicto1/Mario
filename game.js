@@ -88,4 +88,17 @@ scene("game", ({ level, score }) => {
   }
 
   const gameLevel = addLevel(maps[level], levelCfg)
+
+  const scoreLabel = add([
+    text(score),
+    pos(30, 6),
+    layer('ui'),
+    {
+      value: score,
+    }
+  ])
+
+  
+
+
 })
