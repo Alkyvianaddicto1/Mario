@@ -198,4 +198,8 @@ scene("game", ({ level, score }) => {
     player.move(-MOVE_SPEED, 0)
   })
 
+  keyDown('right', () => {
+    player.move(MOVE_SPEED, 0)
+  })
+
 })
