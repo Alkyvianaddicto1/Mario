@@ -13,9 +13,11 @@ let CURRENT_JUMP_FORCE = JUMP_FORCE
 const FALL_DEATH = 400
 const ENEMY_SPEED = 20
 
+// State
 let isJumping = true
 
-loadRoot('https://i.imgur.com/')
+// Replace your loadRoot and loadSprite section with this:
+loadRoot('https://imgur.com/')
 loadSprite('coin', 'wbKxhcd.png')
 loadSprite('evil-shroom', 'KPO3fR9.png')
 loadSprite('brick', 'pogC9x5.png')
@@ -29,6 +31,7 @@ loadSprite('pipe-top-right', 'hj2GK4n.png')
 loadSprite('pipe-bottom-left', 'c1cYSbt.png')
 loadSprite('pipe-bottom-right', 'nqQ79eI.png')
 
+// Blue assets (Level 2)
 loadSprite('blue-block', 'fVscIbn.png')
 loadSprite('blue-brick', '3e5YRQd.png')
 loadSprite('blue-steel', 'gqVoI2b.png')
@@ -84,7 +87,6 @@ scene("game", ({ level, score }) => {
     'z': [sprite('blue-evil-shroom'), solid(), scale(0.5), 'dangerous'],
     '@': [sprite('blue-surprise'), solid(), scale(0.5), 'coin-surprise'],
     'x': [sprite('blue-steel'), solid(), scale(0.5)],
-
   }
 
   const gameLevel = addLevel(maps[level], levelCfg)
@@ -93,29 +95,25 @@ scene("game", ({ level, score }) => {
     text(score),
     pos(30, 6),
     layer('ui'),
-    {
-      value: score,
-    }
+    { value: score }
   ])
 
-  add([text('level ' + parseInt(level + 1) ), pos(40, 6)])
+  add([text('level ' + parseInt(level + 1)), pos(40, 6)])
 
+  // Custom component for Big Mario
   function big() {
     let timer = 0
     let isBig = false
     return {
       update() {
         if (isBig) {
-          CURRENT_JUMP_FORCE = BIG_JUMP_FORCE
           timer -= dt()
           if (timer <= 0) {
             this.smallify()
           }
         }
       },
-      isBig() {
-        return isBig
-      },
+      isBig() { return isBig },
       smallify() {
         this.scale = vec2(1)
         CURRENT_JUMP_FORCE = JUMP_FORCE
@@ -124,6 +122,7 @@ scene("game", ({ level, score }) => {
       },
       biggify(time) {
         this.scale = vec2(2)
+        CURRENT_JUMP_FORCE = BIG_JUMP_FORCE
         timer = time
         isBig = true     
       }
@@ -131,13 +130,15 @@ scene("game", ({ level, score }) => {
   }
 
   const player = add([
-    sprite('mario'), solid(),
+    sprite('mario'), 
+    solid(),
     pos(30, 0),
     body(),
     big(),
     origin('bot')
   ])
 
+  // Movement logic
   action('mushroom', (m) => {
     m.move(20, 0)
   })
@@ -178,10 +179,14 @@ scene("game", ({ level, score }) => {
     }
   })
 
+  // Combined action loop
   player.action(() => {
     camPos(player.pos)
     if (player.pos.y >= FALL_DEATH) {
       go('lose', { score: scoreLabel.value})
+    }
+    if(player.grounded()) {
+      isJumping = false
     }
   })
 
@@ -202,23 +207,16 @@ scene("game", ({ level, score }) => {
     player.move(MOVE_SPEED, 0)
   })
 
-  player.action(() => {
-    if(player.grounded()) {
-      isJumping = false
-    }
-  })
-
   keyPress('space', () => {
     if (player.grounded()) {
       isJumping = true
       player.jump(CURRENT_JUMP_FORCE)
     }
   })
-
 })
 
 scene('lose', ({ score }) => {
-  add([text(score, 32), origin('center'), pos(width()/2, height()/ 2)])
+  add([text("Score: " + score, 32), origin('center'), pos(width()/2, height()/ 2)])
 })
 
 start("game", { level: 0, score: 0})
