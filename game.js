@@ -169,4 +169,12 @@ scene("game", ({ level, score }) => {
   action('dangerous', (d) => {
     d.move(-ENEMY_SPEED, 0)
   })
+
+  player.collides('dangerous', (d) => {
+    if (isJumping) {
+      destroy(d)
+    } else {
+      go('lose', { score: scoreLabel.value})
+    }
+  })
 })
