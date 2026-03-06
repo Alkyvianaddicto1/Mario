@@ -202,4 +202,10 @@ scene("game", ({ level, score }) => {
     player.move(MOVE_SPEED, 0)
   })
 
+  player.action(() => {
+    if(player.grounded()) {
+      isJumping = false
+    }
+  })
+
 })
