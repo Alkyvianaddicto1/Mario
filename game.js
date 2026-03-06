@@ -129,4 +129,12 @@ scene("game", ({ level, score }) => {
       }
     }
   }
+
+  const player = add([
+    sprite('mario'), solid(),
+    pos(30, 0),
+    body(),
+    big(),
+    origin('bot')
+  ])
 })
