@@ -137,4 +137,10 @@ scene("game", ({ level, score }) => {
     big(),
     origin('bot')
   ])
+
+  action('mushroom', (m) => {
+    m.move(20, 0)
+  })
+
+  
 })
