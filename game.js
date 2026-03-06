@@ -154,4 +154,9 @@ scene("game", ({ level, score }) => {
       gameLevel.spawn('}', obj.gridPos.sub(0,0))
     }
   })
+
+  player.collides('mushroom', (m) => {
+    destroy(m)
+    player.biggify(6)
+  })
 })
