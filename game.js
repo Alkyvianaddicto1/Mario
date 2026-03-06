@@ -184,4 +184,13 @@ scene("game", ({ level, score }) => {
       go('lose', { score: scoreLabel.value})
     }
   })
+
+  player.collides('pipe', () => {
+    keyPress('down', () => {
+      go('game', {
+        level: (level + 1) % maps.length,
+        score: scoreLabel.value
+      })
+    })
+  })
 })
