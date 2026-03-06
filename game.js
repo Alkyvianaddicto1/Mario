@@ -159,4 +159,10 @@ scene("game", ({ level, score }) => {
     destroy(m)
     player.biggify(6)
   })
+
+  player.collides('coin', (c) => {
+    destroy(c)
+    scoreLabel.value++
+    scoreLabel.text = scoreLabel.value
+  })
 })
