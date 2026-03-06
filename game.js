@@ -86,4 +86,6 @@ scene("game", ({ level, score }) => {
     'x': [sprite('blue-steel'), solid(), scale(0.5)],
 
   }
+
+  const gameLevel = addLevel(maps[level], levelCfg)
 })
