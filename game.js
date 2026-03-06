@@ -177,4 +177,11 @@ scene("game", ({ level, score }) => {
       go('lose', { score: scoreLabel.value})
     }
   })
+
+  player.action(() => {
+    camPos(player.pos)
+    if (player.pos.y >= FALL_DEATH) {
+      go('lose', { score: scoreLabel.value})
+    }
+  })
 })
