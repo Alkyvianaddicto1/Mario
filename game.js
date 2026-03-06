@@ -165,4 +165,8 @@ scene("game", ({ level, score }) => {
     scoreLabel.value++
     scoreLabel.text = scoreLabel.value
   })
+
+  action('dangerous', (d) => {
+    d.move(-ENEMY_SPEED, 0)
+  })
 })
